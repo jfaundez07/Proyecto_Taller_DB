@@ -1,6 +1,15 @@
 from pymongo import MongoClient
+from neo4j import GraphDatabase
 
-def getConnection():
+def getNeo4jConnection():
+    # https://medium.com/@kasperjuunge/how-to-use-neo4j-with-python-1818159634cd
+    uri = "bolt://localhost:7687"
+    username = "neo4j"
+    password = "1210JAFC"
+    driver = GraphDatabase.driver(uri, auth=(username, password))
+    return driver
+
+def getMongoConnection():
 
     host = 'localhost'
     port = 27017
@@ -27,10 +36,12 @@ def findByGender(gender: str):
 
     
 
-db = getConnection()
-collection = db['NetflixDataset']
+MongoDB = getMongoConnection()
+collection = MongoDB['NetflixDataset']
 
 generoComedyCrime = findByGender('Comedy, Crime')
 print(len(generoComedyCrime))
 
 generoAAA = findByGender('AAA')
+
+Neo4j = getNeo4jConnection()
