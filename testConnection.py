@@ -46,8 +46,8 @@ neo4jDriver = getNeo4jConnection()
 
 # ------------------- MongoDB -------------------
 
-mongoDB = mongoClient['Integracion'] 
-collection = mongoDB['NetflixDataset']
+mongoDataBase = mongoClient['Integracion'] 
+collection = mongoDataBase['NetflixDataset']
 
 generoComedyCrime = findByGender('Comedy, Crime')
 print(len(generoComedyCrime))
@@ -56,5 +56,13 @@ generoAAA = findByGender('AAA')
 
 # ------------------- Neo4j -------------------
 
+nao4jSession = neo4jDriver.session()
 
+def getUsers(tx):
+    query = 'MATCH (u:User) RETURN u'
+    result = tx.run(query)
+    return [record['u'] for record in result]
 
+users = nao4jSession.execute_read(getUsers)
+for user in users:
+    print(user._properties)
