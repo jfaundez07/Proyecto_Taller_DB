@@ -2,12 +2,18 @@ from pymongo import MongoClient
 from neo4j import GraphDatabase
 
 def getNeo4jConnection():
-    # https://medium.com/@kasperjuunge/how-to-use-neo4j-with-python-1818159634cd
+
     uri = "bolt://localhost:7687"
     username = "neo4j"
     password = "1210JAFC"
-    driver = GraphDatabase.driver(uri, auth=(username, password))
-    return driver
+
+    try:
+        driver = GraphDatabase.driver(uri, auth=(username, password))
+        print('Conexión exitosa para Neo4j')
+        return driver
+    
+    except Exception as e:
+        print(e)
 
 def getMongoConnection():
 
@@ -16,9 +22,8 @@ def getMongoConnection():
 
     try:
         client = MongoClient(host, port)
-        db = client['Integracion']
-        print('Conexión exitosa')
-        return db
+        print('Conexión exitosa para mongoDB')
+        return client
         
     except Exception as e:
         print(e)
@@ -34,14 +39,22 @@ def findByGender(gender: str):
     
     return resultados
 
-    
+# ------------------- Conexiones -------------------
 
-MongoDB = getMongoConnection()
-collection = MongoDB['NetflixDataset']
+mongoClient = getMongoConnection()
+neo4jDriver = getNeo4jConnection()
+
+# ------------------- MongoDB -------------------
+
+mongoDB = mongoClient['Integracion'] 
+collection = mongoDB['NetflixDataset']
 
 generoComedyCrime = findByGender('Comedy, Crime')
 print(len(generoComedyCrime))
 
 generoAAA = findByGender('AAA')
 
-Neo4j = getNeo4jConnection()
+# ------------------- Neo4j -------------------
+
+
+
