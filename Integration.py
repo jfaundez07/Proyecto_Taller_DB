@@ -54,7 +54,7 @@ neo4jDriver = getNeo4jConnection()
 mongoDataBase = mongoClient['Integracion'] 
 collection = mongoDataBase['NetflixDataset']
 
-topComedy = findTopRatedMoviesByGenres('Comedy')
+topComedy = findTopRatedMoviesByGenres('Comedy, Crime')
 for movie in topComedy:
     print(movie)
     print('-----------------------------------')
@@ -64,10 +64,17 @@ for movie in topComedy:
 nao4jSession = neo4jDriver.session()
 
 def getUsers(tx):
-    query = 'MATCH (u:User) RETURN u'
+    query = 'MATCH (u) RETURN u'
     result = tx.run(query)
     return [record['u'] for record in result]
+
+def getUsersWithRelations(tx):
+    query = 'MATCH (u:User)-[:PREFERE]->(g:Genre) RETURN u, g'
+    result = tx.run(query)
+    return result
 
 users = nao4jSession.execute_read(getUsers)
 for user in users:
     print(user._properties)
+
+print('\n')
