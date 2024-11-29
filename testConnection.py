@@ -28,17 +28,22 @@ def getMongoConnection():
     except Exception as e:
         print(e)
 
-def findByGender(gender: str):
-    query = {"genres": {"$regex": rf"\b{gender}\b"}}
-    resultados = collection.find(query)
+def findTopRatedMoviesByGenres(gendes):
+    # Para ejecutar esta query en mongo compass:
+    # Quey: { "genres": { "$regex": "Comedy", "$options": "i" } }
+    # Sort: { "imdbAverageRating": -1 }
+    # Limit: 5
+
+    query = {"genres": {"$regex": rf"\b{gendes}\b"}}
+    sort = [("imdbAverageRating", -1)]
+    resultados = collection.find(query).sort(sort).limit(5)
     resultados = list(resultados)
 
     if len(resultados) == 0:
-        print('No se encontraron resultados para el genero ' + gender)
+        print('No se encontraron películas con alta calificación')
         return
     
     return resultados
-
 # ------------------- Conexiones -------------------
 
 mongoClient = getMongoConnection()
@@ -49,10 +54,10 @@ neo4jDriver = getNeo4jConnection()
 mongoDataBase = mongoClient['Integracion'] 
 collection = mongoDataBase['NetflixDataset']
 
-generoComedyCrime = findByGender('Comedy, Crime')
-print(len(generoComedyCrime))
-
-generoAAA = findByGender('AAA')
+topComedy = findTopRatedMoviesByGenres('Comedy')
+for movie in topComedy:
+    print(movie)
+    print('-----------------------------------')
 
 # ------------------- Neo4j -------------------
 
