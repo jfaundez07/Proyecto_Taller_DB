@@ -9,7 +9,7 @@ def getNeo4jConnection():
 
     try:
         driver = GraphDatabase.driver(uri, auth=(username, password))
-        print('Conexión exitosa para Neo4j')
+        print('Conexión exitosa para Neo4j\n')
         return driver
     
     except Exception as e:
@@ -22,7 +22,7 @@ def getMongoConnection():
 
     try:
         client = MongoClient(host, port)
-        print('Conexión exitosa para mongoDB')
+        print('Conexión exitosa para mongoDB\n')
         return client
         
     except Exception as e:
@@ -58,23 +58,30 @@ topComedy = findTopRatedMoviesByGenres('Comedy, Crime')
 for movie in topComedy:
     print(movie)
     print('-----------------------------------')
+print('\n')
 
 # ------------------- Neo4j -------------------
 
 nao4jSession = neo4jDriver.session()
 
+'''
 def getUsers(tx):
     query = 'MATCH (u) RETURN u'
     result = tx.run(query)
     return [record['u'] for record in result]
 
-def getUsersWithRelations(tx):
-    query = 'MATCH (u:User)-[:PREFERE]->(g:Genre) RETURN u, g'
-    result = tx.run(query)
-    return result
-
 users = nao4jSession.execute_read(getUsers)
 for user in users:
     print(user._properties)
+'''
 
-print('\n')
+def getUsersWithRelations(tx):
+    query = 'MATCH (u:User)-[:PREFERE]->(g:Genre) RETURN u, g'
+    result = tx.run(query)
+    return [record for record in result]
+
+usersWithRelations = nao4jSession.execute_read(getUsersWithRelations)
+for user in usersWithRelations:
+    print(user['u']._properties['name'], user['u']._properties['lastName'])
+    print(user['g']._properties['type'])        
+    print('-----------------------------------')
