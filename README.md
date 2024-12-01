@@ -17,13 +17,12 @@ Git flow:
 git flow init
 ```
 
-Entorno virtual de python3:
+Pyomongo:
 
-Activarlo:
 ```bash
-source mi_entorno/bin/activate
+pip install pymongo
 ```
-Desactivarlo:
+Neo4j:
 ```bash
-deactivate
+pip install neo4j
 ```
