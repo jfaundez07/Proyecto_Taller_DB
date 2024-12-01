@@ -7,7 +7,7 @@ def getNeo4jConnection():
 
     uri = "bolt://localhost:7687"
     username = "neo4j"
-    password = "1210JAFC"
+    password = "12345678"
 
     try:
         driver = GraphDatabase.driver(uri, auth=(username, password))
