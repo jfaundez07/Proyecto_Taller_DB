@@ -43,7 +43,7 @@ pip install neo4j
 
 (1) MongoDB:  
 - Importar Dataset '__data.csv__'  
-- Nombre de la base de datos: Integración
+- Nombre de la base de datos: Integracion
 - Nombre de la colección: NetflixDataset
 
 (2) Neo4j:
