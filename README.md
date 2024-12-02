@@ -5,18 +5,18 @@
 2. [Caso a desarrollar](#caso-a-desarrollar)
 3. [Requisitos](#requisitos)  
     3.1. [Control de versiones](#control-de-versiones)  
-    3.2. [Librerias Python](#librerias-python)  
-4. [Importacion y creacion de bases de datos](#importacion-y-creacion-de-bases-de-datos)
+    3.2. [Librerías Python](#librerias-python)  
+4. [Importación y creación de bases de datos](#importacion-y-creacion-de-bases-de-datos)
 
 
 ## Motores seleccionados:
 
-1. MongoDB: DataSet de peliculas de netflix
-2. Neo4j: Base de datos de usuarios relacionados con sus preferencias de generos de peliculas
+1. MongoDB: DataSet de películas de Netflix
+2. Neo4j: Base de datos de usuarios relacionados con sus preferencias de géneros de películas
 
 ## Caso a desarrollar:
 
-Se realizara el cruce de informacion entre las preferencias de genero de peliculas de los usuarios, con las peliculas de dicho genero mejor rankeadas, de manera que se entreguen recomendaciones personalizadas de visualziacion. 
+Se realizará el cruce de información entre las preferencias de género de películas de los usuarios, con las películas de dicho género mejor rankeadas, de manera que se entreguen recomendaciones personalizadas de visualización. 
 
 ## Requisitos:
 
@@ -27,9 +27,9 @@ Git flow:
 ```bash
 git flow init
 ```
-### Librerias Python
+### Librerías Python
 
-Pyomongo:
+Pymongo:
 
 ```bash
 pip install pymongo
@@ -39,15 +39,14 @@ Neo4j:
 pip install neo4j
 ```
 
-## Importacion y creacion de bases de datos:
+## Importación y creación de bases de datos:
 
 (1) MongoDB:  
 - Importar Dataset '__data.csv__'  
-- Nombre de la base de datos: Integracion
-- Nombre de la coleccion: NetflixDataset
+- Nombre de la base de datos: Integración
+- Nombre de la colección: NetflixDataset
 
-(2) Ne04j:
-- Crear una base de datos con la contrasenia '12345678' (En caso de utilizar una diferente, es ncesario actualizarla en 'main.py', funcion '__getNeo4jConnection__').
+(2) Neo4j:
+- Crear una base de datos con la contraseña '12345678' (En caso de utilizar una diferente, es necesario actualizarla en 'main.py', función '__getNeo4jConnection__').
 - Importar y ejecutar el archivo '__Initialize_netflix_users_database.cypher__'.
 - Importar y ejecutar el archivo '__Create_relations.cypher__'.
-
